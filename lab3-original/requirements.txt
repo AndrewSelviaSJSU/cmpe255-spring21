@@ -1,0 +1,5 @@
+matplotlib
+mlxtend
+kaggle-cli
+numpy
+sklearn
