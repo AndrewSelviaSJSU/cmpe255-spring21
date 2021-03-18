@@ -24,9 +24,9 @@ class DiabetesClassifier:
     X, y = self.define_feature()
     X_train, self.X_test, y_train, self.y_test = train_test_split(X, y, random_state=0)
     # train a logistic regression model on the training set
-    logreg = LogisticRegression()
-    logreg.fit(X_train, y_train)
-    return logreg
+    logistic_regression = LogisticRegression()
+    logistic_regression.fit(X_train, y_train)
+    return logistic_regression
 
   def predict(self):
     model = self.train()
@@ -48,10 +48,10 @@ class DiabetesClassifier:
 
 
 if __name__ == "__main__":
-  classifer = DiabetesClassifier()
-  result = classifer.predict()
-  print(f"Predicition={result}")
-  score = classifer.calculate_accuracy(result)
+  classifier = DiabetesClassifier()
+  result = classifier.predict()
+  print(f"Prediction={result}")
+  score = classifier.calculate_accuracy(result)
   print(f"score={score}")
-  con_matrix = classifer.confusion_matrix(result)
+  con_matrix = classifier.confusion_matrix(result)
   print(f"confusion_matrix=${con_matrix}")
