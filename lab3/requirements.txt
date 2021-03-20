@@ -1,2 +1,4 @@
+keras
 scikit-learn
 pandas
+tensorflow
