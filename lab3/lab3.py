@@ -1,13 +1,12 @@
-import pandas as pd
 import itertools
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+
+import pandas as pd
 from sklearn import metrics
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 from sklearn import svm
-from keras import layers
-from keras import models
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import StandardScaler
 
 
 class DiabetesClassifier:
@@ -162,6 +161,40 @@ def solution_6():
   print(f"confusion_matrix={con_matrix}")
 
 
+def bucketize_pregnant(x):
+  if x < 3:
+    return 'few'
+  else:
+    return 'many'
+
+
+
+def solution_7():
+  classifier = DiabetesClassifier()
+  best_features = ['pregnant', 'glucose', 'bp', 'bmi']
+
+  data = classifier.pima
+  data = data[data.glucose != 0]
+  data = data[data.bp != 0]
+  data = data[data.bmi != 0]
+
+  bucketized = data.pregnant.map(bucketize_pregnant).to_frame()
+
+  ohe = OneHotEncoder().fit_transform(bucketized).toarray()
+  data['pregnant_few'] = ohe[:, 0]
+  data['pregnant_many'] = ohe[:, 1]
+  data = data.drop(columns=['pregnant'])
+  new_features = ['pregnant_few', 'pregnant_many', 'glucose', 'bp', 'bmi']
+
+  X, y = classifier.define_feature(new_features, data)
+  X = StandardScaler().fit_transform(X[new_features])
+  result = classifier.predict(X, y)
+  score = classifier.calculate_accuracy(result)
+  print(f"score={score}")
+  con_matrix = classifier.confusion_matrix(result)
+  print(f"confusion_matrix={con_matrix}")
+
+
 if __name__ == "__main__":
   # baseline()
   # solution_1()
@@ -169,4 +202,5 @@ if __name__ == "__main__":
   # solution_3()
   # solution_4()
   # solution_5()
-  solution_6()
+  # solution_6()
+  solution_7()

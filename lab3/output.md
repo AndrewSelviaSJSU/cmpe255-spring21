@@ -9,6 +9,7 @@
 | Solution 4 |    0.812 | [[119  11] [ 25  37]] | StandardScaler + LogisticRegression; {'glucose', 'pregnant', 'bp', 'bmi'}                |
 | Solution 5 |    0.744 | [[105  12] [ 35  32]] | bp != 0 + StandardScaler + LogisticRegression; {'glucose', 'pregnant', 'bp', 'bmi'}      |
 | Solution 6 |    0.754 | [[110  18] [ 29  34]] | glucose != 0 + StandardScaler + LogisticRegression; {'glucose', 'pregnant', 'bp', 'bmi'} |
+| Solution 7 |    0.751 | [[95 26] [19 41]]     | One-Hot Encoding |
 
 The approaches I have taken are broken down into sections below:
 
@@ -39,3 +40,7 @@ I tried to remove outliers where `bp` == 0, but it actually made the model perfo
 ## Solution 6
 
 This time, I tried removing outliers where `glucose` == 0, but it also made the model perform worse.
+
+## Solution 7
+
+I tried to bucketize the pregnant feature into *few* and *many* divided by 3 births. Then, I one-hot encoded the feature. The accuracy went down, but perhaps with more attempts, I could make a bigger dent. Not enough time now, though.
